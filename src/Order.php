@@ -26,9 +26,19 @@ class Order {
             return $this->removeItem($parts);
         }
 
+        if($command === "vaciar"){
+
+            return $this->empty();
+        }
+
         return "";
     }
 
+    private function empty():string{
+        $this->items = [];
+
+        return "La comanda ha sido vaciada";
+    }
     private function removeItem(array $parts): string {
         $dish = strtolower($parts[1] ?? "");
 

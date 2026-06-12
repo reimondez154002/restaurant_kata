@@ -146,4 +146,16 @@ class OrderTest extends TestCase {
         // Assert
         $this->assertEquals("La comanda ha sido vaciada", $result);
     }
+
+    public function test_vaciar_command_clears_all_dishes_and_returns_vacid_message(): void {
+        // Arrange
+        $this->menuMock->method("getPrice")->with("pizza")->willReturn(10.00);
+
+        // Act
+        $this->order->handle("añadir pizza 3");
+        $result = $this->order->handle("vaciar");
+
+        // Assert
+        $this->assertEquals("La comanda ha sido vaciada", $result);
+    }
 }
