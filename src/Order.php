@@ -15,7 +15,7 @@ class Order {
 
         if ($command === "cuenta") {
 
-            return "Total: 0.00";
+            return $this->checkReturn();
         }
 
         if ($command === "añadir") {
@@ -24,6 +24,19 @@ class Order {
         }
 
         return "";
+    }
+
+    private function checkReturn():string{
+        $total = 0.0;
+
+        foreach ($this->items as $dish => $quantity) {
+            $price = $this->menu->getPrice($dish);
+            $total += $price * $quantity;
+        }
+
+        $totalFormatted = number_format($total, 2, '.', '');
+
+        return "Total: {$totalFormatted}";
     }
      private function addItem(array $parts):string{
 
@@ -46,4 +59,5 @@ class Order {
 
         return "{$dish} x{$this->items[$dish]} | Total: {$totalFormatted}";
      }
+
 }
