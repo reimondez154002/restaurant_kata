@@ -53,5 +53,17 @@ class OrderTest extends TestCase {
 
         // Assert
         $this->assertEquals("El plato seleccionado no existe en el menú", $result);
-    }   
+    }
+    
+    public function test_add_same_dish_multiple_times_accumulates_quantity_and_total(): void {
+        // Arrange
+        $this->menuMock->method("getPrice")->with("pizza")->willReturn(10.00);
+
+        // Act
+        $this->order->handle("añadir pizza"); 
+        $result = $this->order->handle("añadir Pizza 2");
+
+        // Assert
+        $this->assertEquals("pizza x3 | Total: 30.00", $result);
+    }
 }
