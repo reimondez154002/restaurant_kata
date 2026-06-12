@@ -46,6 +46,7 @@ class Order {
 
         $this->items[$dish] += $quantity;
 
+        uksort($this->items, 'strnatcmp');
         // Construimos la lista en el orden en que se van insertando (sin ordenar alfabéticamente)
         $orderLines = [];
         foreach ($this->items as $currentDish => $currentQuantity) {
