@@ -67,7 +67,22 @@ class OrderTest extends TestCase {
         $this->assertEquals("pizza x3 | Total: 30.00", $result);
     }
 
-         public function test_bill_returns_calculated_total_of_all_dishes_in_order(): void {
+    public function test_add_multiple_different_dishes_returns_alphabetically_sorted_comanda_with_global_total(): void {
+        // Arrange
+        $this->menuMock->method("getPrice")->willReturnCallback(function($dish) {
+            if ($dish === "pizza") return 10.00;
+            if ($dish === "agua") return 3.00;
+            return null;
+        });
+
+        // Act
+        $this->order->handle("añadir pizza 2");
+        $result = $this->order->handle("añadir agua 1");
+
+        // Assert
+        $this->assertEquals("+pizza x2, agua x1 | Total: 23.00", $result);
+    }
+    public function test_bill_returns_calculated_total_of_all_dishes_in_order(): void {
         // Arrange
         $this->menuMock->method("getPrice")->willReturnCallback(function($dish) {
             if ($dish === "pizza") return 10.00;
