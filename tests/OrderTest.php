@@ -33,6 +33,17 @@ class OrderTest extends TestCase {
         $this->assertEquals("pizza x1 | Total: 10.00", $result);
     }
 
+    public function test_add_existing_dish__with_quantity_returns_order_with_total(): void {
+        // Arrange
+        $this->menuMock->method("getPrice")->with("pizza")->willReturn(10.00);
+        
+        // Act
+        $result = $this->order->handle("añadir pizza 2");
+
+        // Assert
+        $this->assertEquals("pizza x2 | Total: 20.00", $result);
+    }
+
     public function test_add_non_existing_dish_returns_error_message(): void {
         // Arrange
         $this->menuMock->method("getPrice")->with("chistorra")->willReturn(null);
@@ -42,6 +53,5 @@ class OrderTest extends TestCase {
 
         // Assert
         $this->assertEquals("El plato seleccionado no existe en el menú", $result);
-    }
-    
+    }   
 }
