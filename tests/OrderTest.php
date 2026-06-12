@@ -134,4 +134,16 @@ class OrderTest extends TestCase {
         // Al eliminar la pizza, solo debe quedar el agua y sin la parte de " | Total: XX"
         $this->assertEquals("El plato seleccionado no existe", $result);
     }
+
+    public function test_eliminar_last_dish_leaves_comanda_empty_and_returns_vacid_message(): void {
+        // Arrange
+        $this->menuMock->method("getPrice")->with("pizza")->willReturn(10.00);
+
+        // Act
+        $this->order->handle("añadir pizza");
+        $result = $this->order->handle("eliminar pizza");
+
+        // Assert
+        $this->assertEquals("La comanda ha sido vaciada", $result);
+    }
 }

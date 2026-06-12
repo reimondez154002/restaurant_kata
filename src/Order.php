@@ -32,11 +32,19 @@ class Order {
     private function removeItem(array $parts): string {
         $dish = strtolower($parts[1] ?? "");
 
+        
+
         if(!isset($this->items[$dish])){
+
             return "El plato seleccionado no existe";
         }
         // Eliminamos directamente el plato de la comanda
         unset($this->items[$dish]);
+
+        if($this->items === []){
+            
+            return "La comanda ha sido vaciada";
+        }
 
         foreach ($this->items as $currentDish => $currentQuantity) {
             $orderLines[] = "{$currentDish} x{$currentQuantity}";
