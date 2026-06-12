@@ -12,7 +12,8 @@ class Order {
         $parts = explode(" ", trim($instruction));
         $command = strtolower($parts[0] ?? "");
         $dish = strtolower($parts[1] ?? "");
-        
+        $quantity = strtolower($parts[2] ?? 1);
+
         if ($command === "cuenta") {
 
             return "Total: 0.00";
@@ -27,9 +28,10 @@ class Order {
             }
 
             $this->items[$dish] = 1;
-            $totalFormatted = number_format($price, 2, '.', '');
+            $totalPrice = $price * $quantity;
+            $totalFormatted = number_format($totalPrice, 2, '.', '');
 
-            return "{$dish} x1 | Total: {$totalFormatted}";
+            return "{$dish} x{$quantity} | Total: {$totalFormatted}";
         }
 
         return "";
