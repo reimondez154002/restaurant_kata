@@ -17,10 +17,30 @@ class Order {
         }
 
         if ($command === "añadir") {
+
             return $this->addItem($parts);
         }
 
+        if($command === "eliminar"){
+            
+            return $this->removeItem($parts);
+        }
+
         return "";
+    }
+
+    private function removeItem(array $parts): string {
+        $dish = strtolower($parts[1] ?? "");
+
+        // Eliminamos directamente el plato de la comanda
+        unset($this->items[$dish]);
+
+        foreach ($this->items as $currentDish => $currentQuantity) {
+            $orderLines[] = "{$currentDish} x{$currentQuantity}";
+        }
+        $comandaState = implode(", ", $orderLines);
+
+        return "{$comandaState}";
     }
 
     private function checkReturn(): string {
