@@ -80,7 +80,7 @@ class OrderTest extends TestCase {
         $result = $this->order->handle("añadir agua 1");
 
         // Assert
-        $this->assertEquals("pizza x2, agua x1 | Total: 23.00", $result);
+        $this->assertEquals("agua x1, pizza x2 | Total: 23.00", $result);
     }
     public function test_bill_returns_calculated_total_of_all_dishes_in_order(): void {
         // Arrange
