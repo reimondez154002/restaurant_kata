@@ -36,10 +36,14 @@ class Order {
             return "El plato seleccionado no existe en el menú";
         }
 
-        $this->items[$dish] = $quantity;
-        $totalPrice = $price * $quantity;
+        if (!isset($this->items[$dish])) {
+            $this->items[$dish] = 0;
+        }
+
+        $this->items[$dish] = $this->items[$dish] + $quantity;
+        $totalPrice = $price * $this->items[$dish];
         $totalFormatted = number_format($totalPrice, 2, '.', '');
 
-        return "{$dish} x{$quantity} | Total: {$totalFormatted}";
+        return "{$dish} x{$this->items[$dish]} | Total: {$totalFormatted}";
      }
 }
