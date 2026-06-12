@@ -32,4 +32,16 @@ class OrderTest extends TestCase {
         // Assert
         $this->assertEquals("pizza x1 | Total: 10.00", $result);
     }
+
+    public function test_add_non_existing_dish_returns_error_message(): void {
+        // Arrange
+        $this->menuMock->method("getPrice")->with("chistorra")->willReturn(null);
+
+        // Act
+        $result = $this->order->handle("añadir chistorra");
+
+        // Assert
+        $this->assertEquals("El plato seleccionado no existe en el menú", $result);
+    }
+    
 }
