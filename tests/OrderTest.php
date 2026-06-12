@@ -98,4 +98,22 @@ class OrderTest extends TestCase {
         // Assert
         $this->assertEquals("Total: 13.00", $result);
     }
+
+    public function test_eliminar_command_removes_dish_completely_and_returns_remaining_items_without_total(): void {
+        // Arrange
+        $this->menuMock->method("getPrice")->willReturnCallback(function($dish) {
+            if ($dish === "pizza") return 10.00;
+            if ($dish === "agua") return 3.00;
+            return null;
+        });
+
+        // Act
+        $this->order->handle("añadir pizza 2");
+        $this->order->handle("añadir agua 1");
+        $result = $this->order->handle("eliminar pizza");
+
+        // Assert
+        // Al eliminar la pizza, solo debe quedar el agua y sin la parte de " | Total: XX"
+        $this->assertEquals("agua x1", $result);
+    }
 }
